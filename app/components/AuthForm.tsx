@@ -55,19 +55,21 @@ export default function AuthForm({ type }: AuthFormProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-800 to-slate-950 flex items-center justify-center px-4 py-8">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>{type === 'login' ? 'Connexion' : 'Inscription'}</CardTitle>
-          <CardDescription>
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-8">
+      <Card className="w-full max-w-md border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+        <CardHeader className="border-b-2 border-black">
+          <CardTitle className="text-2xl font-bold text-black">
+            {type === 'login' ? 'Connexion' : 'Inscription'}
+          </CardTitle>
+          <CardDescription className="text-black/70">
             {type === 'login'
               ? 'Connectez-vous pour accéder à la caisse.'
               : 'Créez un compte caissier pour commencer à vendre.'}
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           {error && (
-            <div className="mb-4 rounded-lg bg-red-100 px-4 py-3 text-sm text-red-800">
+            <div className="mb-4 rounded-lg border-2 border-black bg-black px-4 py-3 text-sm text-white">
               {error}
             </div>
           )}
@@ -75,19 +77,20 @@ export default function AuthForm({ type }: AuthFormProps) {
           <form onSubmit={handleSubmit} className="space-y-4">
             {type === 'register' && (
               <div className="space-y-2">
-                <Label htmlFor="name">Nom</Label>
+                <Label htmlFor="name" className="text-black font-semibold">Nom</Label>
                 <Input
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Jean Dupont"
                   required
+                  className="border-2 border-black bg-white text-black placeholder:text-black/40 focus:ring-2 focus:ring-black focus:border-black"
                 />
               </div>
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-black font-semibold">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -95,11 +98,12 @@ export default function AuthForm({ type }: AuthFormProps) {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="email@bar.local"
                 required
+                className="border-2 border-black bg-white text-black placeholder:text-black/40 focus:ring-2 focus:ring-black focus:border-black"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Mot de passe</Label>
+              <Label htmlFor="password" className="text-black font-semibold">Mot de passe</Label>
               <Input
                 id="password"
                 type="password"
@@ -107,26 +111,31 @@ export default function AuthForm({ type }: AuthFormProps) {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
+                className="border-2 border-black bg-white text-black placeholder:text-black/40 focus:ring-2 focus:ring-black focus:border-black"
               />
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button 
+              type="submit" 
+              className="w-full bg-black text-white hover:bg-white hover:text-black border-2 border-black transition-colors font-bold"
+              disabled={loading}
+            >
               {loading ? 'Chargement...' : type === 'login' ? 'Se connecter' : 'S\'inscrire'}
             </Button>
           </form>
 
-          <p className="mt-4 text-sm text-slate-600">
+          <p className="mt-4 text-sm text-black/70">
             {type === 'login' ? (
               <>
                 Pas de compte ?{' '}
-                <Link href="/auth/register" className="text-slate-950 underline">
+                <Link href="/auth/register" className="text-black font-bold underline hover:opacity-70">
                   Inscrivez-vous
                 </Link>
               </>
             ) : (
               <>
                 Déjà inscrit ?{' '}
-                <Link href="/auth/login" className="text-slate-950 underline">
+                <Link href="/auth/login" className="text-black font-bold underline hover:opacity-70">
                   Connectez-vous
                 </Link>
               </>
@@ -136,4 +145,4 @@ export default function AuthForm({ type }: AuthFormProps) {
       </Card>
     </div>
   );
-}
+}                      
