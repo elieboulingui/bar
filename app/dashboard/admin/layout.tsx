@@ -5,21 +5,14 @@ import AdminSidebar from '@/app/components/ui/admin-sidebar';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const auth = await getAuth();
-
-  if (!auth) {
-    redirect('/auth/login');
-  }
-
-  // Only allow ADMIN to access admin pages; otherwise send cashier to cashier dashboard
-  if (auth.role !== 'ADMIN') {
-    redirect('/dashboard/cashier');
-  }
+  if (!auth) redirect('/auth/login');
+  if (auth.role !== 'ADMIN') redirect('/dashboard/cashier');
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="max-w-7xl mx-auto py-8 px-4 md:px-6 lg:px-8 flex gap-6">
+    <div className="min-h-screen bg-muted/40 p-3 md:p-6">
+      <div className="mx-auto flex max-w-[1500px] flex-col gap-6 lg:flex-row">
         <AdminSidebar />
-        <main className="flex-1">{children}</main>
+        <main className="min-w-0 flex-1 py-2 lg:py-1">{children}</main>
       </div>
     </div>
   );
