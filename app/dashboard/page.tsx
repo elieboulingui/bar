@@ -1,20 +1,26 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function Home() {
+export default function DashboardPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const checkAuthAndRedirect = async () => {
       try {
         const response = await fetch('/api/auth/me');
-        if (response.ok) {
-          router.push('/dashboard');
-        } else {
+        if (!response.ok) {
           router.push('/auth/login');
+          return;
+        }
+
+        const data = await response.json();
+        if (data.role === 'ADMIN') {
+          router.push('/dashboard/admin');
+        } else {
+          router.push('/dashboard/cashier');
         }
       } catch (error) {
         router.push('/auth/login');
@@ -23,12 +29,12 @@ export default function Home() {
       }
     };
 
-    checkAuth();
+    checkAuthAndRedirect();
   }, [router]);
 
   return (
     <div className="flex justify-center items-center h-screen">
-      {loading ? <p>Redirection...</p> : null}
+      {loading ? <p>Chargement...</p> : null}
     </div>
   );
 }
